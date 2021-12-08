@@ -19,10 +19,13 @@ public class display extends JFrame {
     Color steamRedB = new Color(46, 13, 12);// dark
     Color steamGold = new Color(178, 159, 76);// gold
 
+    stringToJson s = new stringToJson();
+
     public Webcam webcam = null;
     public WebcamPanel panel = null;
     public JTextArea textarea = new JTextArea("test text");
     public JTextField soucefolder = new JTextField();
+    public JButton upload = new JButton("push");
 
     public void init() {
         setSize(465, 1080);
@@ -55,5 +58,22 @@ public class display extends JFrame {
         soucefolder.setForeground(steamGold);
         add(soucefolder);
         soucefolder.setVisible(true);
+
+        add(upload);
+        upload.setBounds(0,400,50,30);
+        upload.setBackground(steamRedA);
+        upload.setForeground(steamGold);
+        upload.setVisible(true);
+        upload.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    s.makeJson(textarea.getText(),soucefolder.getText());
+                } catch (IOException | ParseException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+    
 }

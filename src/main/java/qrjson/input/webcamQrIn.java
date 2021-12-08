@@ -55,12 +55,6 @@ public class webcamQrIn {
 				if(!result.getText().equals(old)){
 					old = result.getText();
 				d.textarea.setText(result.getText());
-                try {
-                    s.makeJson(result.getText(),d.soucefolder.getText());
-                } catch (IOException | ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
 			}
 			}
         }while(true);
