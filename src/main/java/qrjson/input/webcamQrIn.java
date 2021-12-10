@@ -21,7 +21,7 @@ import com.google.zxing.common.HybridBinarizer;
 import org.json.simple.parser.ParseException;
 
 public class webcamQrIn {
-
+	public String chache = "";
 	private String old = "";
     public void run(display d) {
         stringToJson s = new stringToJson();
@@ -53,8 +53,12 @@ public class webcamQrIn {
 
 			if (result != null) {
 				if(!result.getText().equals(old)){
-					old = result.getText();
-				d.textarea.setText(result.getText());
+					old =  result.getText();
+					if(chache!=""){
+						chache += "-";
+					}
+					chache += result.getText();
+				d.textarea.setText(chache);
 			}
 			}
         }while(true);

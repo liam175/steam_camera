@@ -3,11 +3,14 @@ package qrjson.input;
 import javax.swing.JFrame;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
 
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
@@ -23,7 +26,7 @@ public class display extends JFrame {
 
     public Webcam webcam = null;
     public WebcamPanel panel = null;
-    public JTextArea textarea = new JTextArea("test text");
+    public JTextArea textarea = new JTextArea("input location");
     public JTextField soucefolder = new JTextField();
     public JButton upload = new JButton("push");
 
@@ -37,14 +40,14 @@ public class display extends JFrame {
         webcam = Webcam.getWebcams().get(0);
 
         panel = new WebcamPanel(webcam);
+        add(panel);
         panel.setBounds(0, 0, 465, 345);
         panel.setFPSDisplayed(true);
-        add(panel);
 
+        add(textarea);
         textarea.setBounds(0, 345, 465, 50);
         textarea.setBackground(steamRedA);
         textarea.setForeground(steamGold);
-        add(textarea);
         textarea.setVisible(true);
 
         try {
@@ -53,27 +56,28 @@ public class display extends JFrame {
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
         }
+        add(soucefolder);
         soucefolder.setBounds(0, 395, 465, 20);
         soucefolder.setBackground(steamRedA);
         soucefolder.setForeground(steamGold);
-        add(soucefolder);
         soucefolder.setVisible(true);
 
         add(upload);
-        upload.setBounds(0,400,50,30);
+        upload.setBounds(0, 420, 100, 40);
         upload.setBackground(steamRedA);
         upload.setForeground(steamGold);
         upload.setVisible(true);
         upload.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    s.makeJson(textarea.getText(),soucefolder.getText());
-                } catch (IOException | ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    s.makeJson(textarea.getText(), soucefolder.getText());
+                    textarea.setText("");
+                } catch (IOException | org.json.simple.parser.ParseException e1) {
+                    e1.printStackTrace();
                 }
             }
         });
     }
-    
+
 }
